@@ -253,11 +253,11 @@ export default function ScrollSequence() {
                 {/* --- SECTION 5: GALAXY AI (0.80 - 1.0) --- */}
                 {/* Adjusted padding and sizing for better mobile visibility */}
                 <TextLayer progress={scrollYProgress} start={0.85} end={0.92} align="right">
-                    <div className="w-full px-6 md:px-0">
-                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-samsung-blue to-purple-400 mb-6 drop-shadow-lg text-center md:text-right">
+                    <div className="w-full px-4 md:px-0 flex flex-col items-center md:items-end">
+                        <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-samsung-blue to-purple-400 mb-4 drop-shadow-lg text-center md:text-right w-full">
                             Galaxy AI
                         </h2>
-                        <p className="text-lg sm:text-xl text-white/60 leading-relaxed font-light text-center md:text-right mx-auto md:ml-auto md:mr-0 max-w-xs md:max-w-md">
+                        <p className="text-base sm:text-xl text-white/60 leading-relaxed font-light text-center md:text-right max-w-xs md:max-w-md">
                             The most advanced AI on a smartphone. Live Translate, Note Assist, and Circle to Search.
                         </p>
                     </div>
