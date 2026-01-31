@@ -135,7 +135,8 @@ export default function ScrollSequence() {
             ctx.save();
             ctx.globalAlpha = opacity;
 
-            const isMobile = canvas.width < 768;
+            // Check based on CSS pixels, not physical pixels
+            const isMobile = (canvas.width / (window.devicePixelRatio || 1)) < 768;
 
             if (isMobile && enableRotation) {
                 // Mobile: Rotate image 90 degrees to fit vertical screen
@@ -181,12 +182,25 @@ export default function ScrollSequence() {
         return () => { unsubscribe1(); unsubscribe2(); unsubscribe3(); unsubscribe4(); unsubscribe5(); };
     }, [currentIndex, currentCameraIndex, currentThirdIndex, currentSpenIndex, currentAiIndex, images, cameraImages, thirdImages, spenImages, aiImages, imagesLoaded, mainOpacity, cameraOpacity, thirdOpacity, spenOpacity, aiOpacity]);
 
-    // Handle resize
+    // Handle resize with High DPI support
     useEffect(() => {
         const handleResize = () => {
             if (canvasRef.current) {
-                canvasRef.current.width = window.innerWidth;
-                canvasRef.current.height = window.innerHeight;
+                const dpr = window.devicePixelRatio || 1;
+                // Set actual size in memory (scaled to account for extra pixel density)
+                canvasRef.current.width = window.innerWidth * dpr;
+                canvasRef.current.height = window.innerHeight * dpr;
+
+                // Make it look the same size on screen
+                canvasRef.current.style.width = `${window.innerWidth}px`;
+                canvasRef.current.style.height = `${window.innerHeight}px`;
+
+                // Ensure context uses high quality smoothing
+                const ctx = canvasRef.current.getContext('2d');
+                if (ctx) {
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                }
             }
         };
         window.addEventListener('resize', handleResize);
@@ -199,7 +213,7 @@ export default function ScrollSequence() {
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <canvas
                     ref={canvasRef}
-                    className="w-full h-full object-cover mix-blend-lighten"
+                    className="w-full h-full object-cover mix-blend-lighten block"
                 />
 
                 {/* Vignette Overlay to blend image edges */}
