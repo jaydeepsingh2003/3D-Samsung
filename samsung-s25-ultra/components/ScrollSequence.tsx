@@ -135,22 +135,29 @@ export default function ScrollSequence() {
             ctx.save();
             ctx.globalAlpha = opacity;
 
-            // Standard Cover Logic calculations
-            const widthScale = canvas.width / img.width;
-            const heightScale = canvas.height / img.height;
-            let scale = Math.max(widthScale, heightScale);
+            const isMobile = canvas.width < 768;
 
-            // Mobile Smart Scale
-            // Users want the impact of 'zoom' (filling screen height) but need 'visibility' (fitting width).
-            // We interpolate between 'Contain' (widthScale) and 'Cover' (heightScale).
-            // A factor of 0.6 pushes it towards 'Cover' (Zoom) while still pulling back enough to reveal more of the product than a full crop.
-            if (canvas.width < 768) {
-                scale = widthScale + (heightScale - widthScale) * 0.6;
+            if (isMobile) {
+                // Mobile: Rotate image 90 degrees to fit vertical screen
+                const scale = Math.max(canvas.width / img.height, canvas.height / img.width);
+
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(Math.PI / 2);
+                ctx.drawImage(
+                    img,
+                    (-img.width / 2) * scale,
+                    (-img.height / 2) * scale,
+                    img.width * scale,
+                    img.height * scale
+                );
+            } else {
+                // Desktop: Standard Cover logic
+                const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+                const x = (canvas.width / 2) - (img.width / 2) * scale;
+                const y = (canvas.height / 2) - (img.height / 2) * scale;
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
             }
 
-            const x = (canvas.width / 2) - (img.width / 2) * scale;
-            const y = (canvas.height / 2) - (img.height / 2) * scale;
-            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
             ctx.restore();
         }
 
