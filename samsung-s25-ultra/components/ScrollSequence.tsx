@@ -137,17 +137,17 @@ export default function ScrollSequence() {
             ctx.save();
             ctx.globalAlpha = opacity;
 
-            // Desktop: Cover (standard)
-            // Mobile (Portrait): Contain-ish (Fit width mostly, with slight zoom to avoid tiny images)
-            const isMobile = canvas.width < 768;
-            let scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+            // Standard Cover Logic calculations
+            const widthScale = canvas.width / img.width;
+            const heightScale = canvas.height / img.height;
+            let scale = Math.max(widthScale, heightScale);
 
-            if (isMobile) {
-                // On mobile, 'cover' zooms too much. 'contain' (width/width) might be too small.
-                // We use width-based scaling but multiply by 1.2 to give a bit of presence without excessive cropping.
-                scale = (canvas.width / img.width) * 1.2;
-                // Ensure we don't accidentally zoom out (scale < contain) if the image is tall
-                scale = Math.max(scale, (canvas.width / img.width));
+            // Mobile Smart Scale
+            // Users want the impact of 'zoom' (filling screen height) but need 'visibility' (fitting width).
+            // We interpolate between 'Contain' (widthScale) and 'Cover' (heightScale).
+            // A factor of 0.6 pushes it towards 'Cover' (Zoom) while still pulling back enough to reveal more of the product than a full crop.
+            if (canvas.width < 768) {
+                scale = widthScale + (heightScale - widthScale) * 0.6;
             }
 
             const x = (canvas.width / 2) - (img.width / 2) * scale;
