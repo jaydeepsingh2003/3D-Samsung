@@ -99,45 +99,45 @@ export default function ScrollSequence() {
             if (mainOpacity.get() > 0) {
                 const idx = Math.min(FRAME_COUNT, Math.max(1, Math.round(currentIndex.get())));
                 const img = images[idx - 1];
-                if (img) drawImageCover(context, img, canvas, mainOpacity.get());
+                if (img) drawImageCover(context, img, canvas, mainOpacity.get(), true);
             }
 
             // 2. Camera Layer
             if (cameraOpacity.get() > 0) {
                 const idx = Math.min(FRAME_COUNT, Math.max(1, Math.round(currentCameraIndex.get())));
                 const img = cameraImages[idx - 1];
-                if (img) drawImageCover(context, img, canvas, cameraOpacity.get());
+                if (img) drawImageCover(context, img, canvas, cameraOpacity.get(), true);
             }
 
             // 3. Third Layer
             if (thirdOpacity.get() > 0) {
                 const idx = Math.min(FRAME_COUNT, Math.max(1, Math.round(currentThirdIndex.get())));
                 const img = thirdImages[idx - 1];
-                if (img) drawImageCover(context, img, canvas, thirdOpacity.get());
+                if (img) drawImageCover(context, img, canvas, thirdOpacity.get(), true);
             }
 
             // 4. S Pen Layer
             if (spenOpacity.get() > 0) {
                 const idx = Math.min(FRAME_COUNT, Math.max(1, Math.round(currentSpenIndex.get())));
                 const img = spenImages[idx - 1];
-                if (img) drawImageCover(context, img, canvas, spenOpacity.get());
+                if (img) drawImageCover(context, img, canvas, spenOpacity.get(), true);
             }
 
-            // 5. Galaxy AI Layer
+            // 5. Galaxy AI Layer (Horizontal on Mobile as requested)
             if (aiOpacity.get() > 0) {
                 const idx = Math.min(FRAME_COUNT, Math.max(1, Math.round(currentAiIndex.get())));
                 const img = aiImages[idx - 1];
-                if (img) drawImageCover(context, img, canvas, aiOpacity.get());
+                if (img) drawImageCover(context, img, canvas, aiOpacity.get(), false);
             }
         };
 
-        const drawImageCover = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, canvas: HTMLCanvasElement, opacity: number) => {
+        const drawImageCover = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, canvas: HTMLCanvasElement, opacity: number, enableRotation: boolean = true) => {
             ctx.save();
             ctx.globalAlpha = opacity;
 
             const isMobile = canvas.width < 768;
 
-            if (isMobile) {
+            if (isMobile && enableRotation) {
                 // Mobile: Rotate image 90 degrees to fit vertical screen
                 const scale = Math.max(canvas.width / img.height, canvas.height / img.width);
 
@@ -151,8 +151,16 @@ export default function ScrollSequence() {
                     img.height * scale
                 );
             } else {
-                // Desktop: Standard Cover logic
-                const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+                // Desktop OR Mobile Horizontal (Standard logic)
+                const widthScale = canvas.width / img.width;
+                const heightScale = canvas.height / img.height;
+                let scale = Math.max(widthScale, heightScale);
+
+                // If mobile but rotation disabled (Galaxy AI section), use the "Smart Scale" to balance zoom/visibility
+                if (isMobile && !enableRotation) {
+                    scale = widthScale + (heightScale - widthScale) * 0.6;
+                }
+
                 const x = (canvas.width / 2) - (img.width / 2) * scale;
                 const y = (canvas.height / 2) - (img.height / 2) * scale;
                 ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
