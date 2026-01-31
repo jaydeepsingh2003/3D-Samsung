@@ -184,53 +184,53 @@ export default function ScrollSequence() {
 
                 {/* --- SECTION 1: HERO (0 - 0.20) --- */}
                 <TextLayer progress={scrollYProgress} start={0} end={0.12} align="center">
-                    <h1 className="text-6xl md:text-9xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 mb-6 drop-shadow-2xl">
+                    <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 mb-6 drop-shadow-2xl text-center">
                         Galaxy S25 Ultra
                     </h1>
-                    <p className="text-2xl text-white/70 font-light tracking-wide">The new standard of power.</p>
+                    <p className="text-xl md:text-2xl text-white/70 font-light tracking-wide text-center">The new standard of power.</p>
                 </TextLayer>
 
                 <TextLayer progress={scrollYProgress} start={0.14} end={0.18} align="left">
-                    <h2 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">Precision Engineered</h2>
-                    <p className="text-xl text-white/60 max-w-md leading-relaxed font-light">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-left">Precision Engineered</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-left">
                         Titanium shell. Armor Aluminum frame. Designed to endure the extreme.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 2: CAMERA (0.20 - 0.40) --- */}
                 <TextLayer progress={scrollYProgress} start={0.25} end={0.35} align="right">
-                    <h2 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">200MP Clarity</h2>
-                    <p className="text-xl text-white/60 max-w-md leading-relaxed font-light">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-right">200MP Clarity</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-right">
                         Capture the unseen with our most advanced sensor technology yet.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 3: PERFORMANCE (0.40 - 0.60) --- */}
                 <TextLayer progress={scrollYProgress} start={0.45} end={0.55} align="center">
-                    <h2 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">Snapdragon 8 Gen 5</h2>
-                    <p className="text-xl text-white/60 max-w-md leading-relaxed font-light">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center">Snapdragon 8 Gen 5</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center">
                         Ray tracing, 8K video, and real-time AI translation at the speed of thought.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 4: S PEN (0.60 - 0.80) --- */}
                 <TextLayer progress={scrollYProgress} start={0.65} end={0.75} align="left">
-                    <h2 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">Integrated S Pen</h2>
-                    <p className="text-xl text-white/60 max-w-md leading-relaxed font-light">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-left">Integrated S Pen</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-left">
                         Write, sketch, and control with precision. The S Pen is built-in and ready when you are.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 5: GALAXY AI (0.80 - 1.0) --- */}
                 <TextLayer progress={scrollYProgress} start={0.85} end={0.92} align="right">
-                    <h2 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-samsung-blue to-purple-400 mb-4 drop-shadow-lg">Galaxy AI</h2>
-                    <p className="text-xl text-white/60 max-w-md leading-relaxed font-light">
+                    <h2 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-samsung-blue to-purple-400 mb-4 drop-shadow-lg text-center md:text-right">Galaxy AI</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-right">
                         The most advanced AI on a smartphone. Live Translate, Note Assist, and Circle to Search.
                     </p>
                 </TextLayer>
 
                 <TextLayer progress={scrollYProgress} start={0.95} end={1.0} align="center">
-                    <button className="bg-gradient-to-r from-samsung-blue to-samsung-cyan text-white px-10 py-4 rounded-full text-xl font-bold hover:scale-105 transition-all shadow-[0_0_30px_rgba(0,214,255,0.4)]">
+                    <button className="bg-gradient-to-r from-samsung-blue to-samsung-cyan text-white px-8 py-3 md:px-10 md:py-4 rounded-full text-lg md:text-xl font-bold hover:scale-105 transition-all shadow-[0_0_30px_rgba(0,214,255,0.4)]">
                         Order Now
                     </button>
                 </TextLayer>

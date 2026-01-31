@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
     const { scrollY } = useScroll();
     const [hidden, setHidden] = useState(false);
     const [activeSection, setActiveSection] = useState('Overview');
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     // Smooth scroll hook
     // @ts-ignore
@@ -42,6 +43,7 @@ export default function Navbar() {
     }, [scrollY]);
 
     const handleScroll = (offset: number) => {
+        setMobileMenuOpen(false);
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         window.scrollTo({
             top: offset * docHeight,
@@ -50,39 +52,86 @@ export default function Navbar() {
     };
 
     return (
-        <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: hidden ? 0 : 1, y: hidden ? -20 : 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed top-0 left-0 w-full z-50 glass-panel"
-        >
-            <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-                <div onClick={() => handleScroll(0)} className="font-semibold text-lg tracking-tight text-white flex items-center gap-2 cursor-pointer">
-                    <span className="font-bold">Samsung</span> Galaxy S25 Ultra
-                </div>
+        <>
+            <motion.nav
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: hidden ? 0 : 1, y: hidden ? -20 : 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${mobileMenuOpen ? 'bg-black' : 'glass-panel'}`}
+            >
+                <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+                    <div onClick={() => handleScroll(0)} className="font-semibold text-lg tracking-tight text-white flex items-center gap-2 cursor-pointer z-50">
+                        <span className="font-bold">Samsung</span> Galaxy S25 Ultra
+                    </div>
 
-                <div className="hidden md:flex space-x-8 text-sm font-medium text-white/70">
-                    {NAV_ITEMS.map((item) => (
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex space-x-8 text-sm font-medium text-white/70">
+                        {NAV_ITEMS.map((item) => (
+                            <button
+                                key={item.name}
+                                onClick={() => handleScroll(item.offset)}
+                                className={`transition-colors relative ${activeSection === item.name ? 'text-white' : 'hover:text-samsung-cyan'}`}
+                            >
+                                {item.name}
+                                {activeSection === item.name && (
+                                    <motion.div
+                                        layoutId="active-nav"
+                                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-samsung-blue"
+                                    />
+                                )}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <button className="hidden md:block bg-gradient-to-r from-samsung-blue to-samsung-cyan text-white px-5 py-1.5 rounded-full text-sm font-semibold hover:shadow-[0_0_15px_rgba(0,214,255,0.5)] transition-shadow">
+                            Order Now
+                        </button>
+
+                        {/* Mobile Menu Button */}
                         <button
-                            key={item.name}
-                            onClick={() => handleScroll(item.offset)}
-                            className={`transition-colors relative ${activeSection === item.name ? 'text-white' : 'hover:text-samsung-cyan'}`}
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="md:hidden text-white focus:outline-none z-50"
                         >
-                            {item.name}
-                            {activeSection === item.name && (
-                                <motion.div
-                                    layoutId="active-nav"
-                                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-samsung-blue"
-                                />
+                            {mobileMenuOpen ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
                             )}
                         </button>
-                    ))}
+                    </div>
                 </div>
+            </motion.nav>
 
-                <button className="bg-gradient-to-r from-samsung-blue to-samsung-cyan text-white px-5 py-1.5 rounded-full text-sm font-semibold hover:shadow-[0_0_15px_rgba(0,214,255,0.5)] transition-shadow">
-                    Order Now
-                </button>
-            </div>
-        </motion.nav>
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 z-40 bg-black pt-20 px-6 md:hidden flex flex-col items-center gap-8"
+                    >
+                        {NAV_ITEMS.map((item) => (
+                            <button
+                                key={item.name}
+                                onClick={() => handleScroll(item.offset)}
+                                className={`text-2xl font-medium transition-colors ${activeSection === item.name ? 'text-samsung-cyan' : 'text-white/80'}`}
+                            >
+                                {item.name}
+                            </button>
+                        ))}
+                        <button className="mt-4 bg-gradient-to-r from-samsung-blue to-samsung-cyan text-white px-8 py-3 rounded-full text-lg font-semibold shadow-[0_0_15px_rgba(0,214,255,0.5)]">
+                            Order Now
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
     );
 }
