@@ -94,8 +94,6 @@ export default function ScrollSequence() {
             if (!canvas || !context || !imagesLoaded || images.length === 0) return;
 
             context.clearRect(0, 0, canvas.width, canvas.height);
-            context.fillStyle = '#050505';
-            context.fillRect(0, 0, canvas.width, canvas.height);
 
             // 1. Hero Layer
             if (mainOpacity.get() > 0) {
@@ -186,7 +184,7 @@ export default function ScrollSequence() {
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <canvas
                     ref={canvasRef}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover mix-blend-lighten"
                 />
 
                 {/* Vignette Overlay to blend image edges */}
