@@ -189,6 +189,9 @@ export default function ScrollSequence() {
                     className="w-full h-full object-cover"
                 />
 
+                {/* Vignette Overlay to blend image edges */}
+                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,transparent_50%,#050505_100%)] mix-blend-normal"></div>
+
                 {!imagesLoaded && (
                     <div className="absolute inset-0 flex items-center justify-center text-white/50">
                         Loading Experience...
@@ -197,49 +200,54 @@ export default function ScrollSequence() {
 
                 {/* --- SECTION 1: HERO (0 - 0.20) --- */}
                 <TextLayer progress={scrollYProgress} start={0} end={0.12} align="center">
-                    <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 mb-6 drop-shadow-2xl text-center">
+                    <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 mb-6 drop-shadow-2xl text-center px-4">
                         Galaxy S25 Ultra
                     </h1>
-                    <p className="text-xl md:text-2xl text-white/70 font-light tracking-wide text-center">The new standard of power.</p>
+                    <p className="text-xl md:text-2xl text-white/70 font-light tracking-wide text-center px-4">The new standard of power.</p>
                 </TextLayer>
 
                 <TextLayer progress={scrollYProgress} start={0.14} end={0.18} align="left">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-left">Precision Engineered</h2>
-                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-left">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-left px-4">Precision Engineered</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-left px-4">
                         Titanium shell. Armor Aluminum frame. Designed to endure the extreme.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 2: CAMERA (0.20 - 0.40) --- */}
                 <TextLayer progress={scrollYProgress} start={0.25} end={0.35} align="right">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-right">200MP Clarity</h2>
-                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-right">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-right px-4">200MP Clarity</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-right px-4">
                         Capture the unseen with our most advanced sensor technology yet.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 3: PERFORMANCE (0.40 - 0.60) --- */}
                 <TextLayer progress={scrollYProgress} start={0.45} end={0.55} align="center">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center">Snapdragon 8 Gen 5</h2>
-                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center px-4">Snapdragon 8 Gen 5</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center px-4">
                         Ray tracing, 8K video, and real-time AI translation at the speed of thought.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 4: S PEN (0.60 - 0.80) --- */}
                 <TextLayer progress={scrollYProgress} start={0.65} end={0.75} align="left">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-left">Integrated S Pen</h2>
-                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-left">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg text-center md:text-left px-4">Integrated S Pen</h2>
+                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-left px-4">
                         Write, sketch, and control with precision. The S Pen is built-in and ready when you are.
                     </p>
                 </TextLayer>
 
                 {/* --- SECTION 5: GALAXY AI (0.80 - 1.0) --- */}
+                {/* Adjusted padding and sizing for better mobile visibility */}
                 <TextLayer progress={scrollYProgress} start={0.85} end={0.92} align="right">
-                    <h2 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-samsung-blue to-purple-400 mb-4 drop-shadow-lg text-center md:text-right">Galaxy AI</h2>
-                    <p className="text-lg md:text-xl text-white/60 max-w-md leading-relaxed font-light text-center md:text-right">
-                        The most advanced AI on a smartphone. Live Translate, Note Assist, and Circle to Search.
-                    </p>
+                    <div className="w-full px-6 md:px-0">
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-samsung-blue to-purple-400 mb-6 drop-shadow-lg text-center md:text-right">
+                            Galaxy AI
+                        </h2>
+                        <p className="text-lg sm:text-xl text-white/60 leading-relaxed font-light text-center md:text-right mx-auto md:ml-auto md:mr-0 max-w-xs md:max-w-md">
+                            The most advanced AI on a smartphone. Live Translate, Note Assist, and Circle to Search.
+                        </p>
+                    </div>
                 </TextLayer>
 
                 <TextLayer progress={scrollYProgress} start={0.95} end={1.0} align="center">
@@ -262,6 +270,7 @@ function TextLayer({ children, progress, start, end, align }: { children: React.
     // @ts-ignore
     const pointerEvents = useTransform(progress, (v) => (v >= start && v <= end ? 'auto' : 'none'));
 
+    // Adjusted alignment logic for better mobile resizing
     let alignClass = 'items-center text-center';
     if (align === 'left') alignClass = 'items-center md:items-start md:text-left justify-center md:pl-32';
     if (align === 'right') alignClass = 'items-center md:items-end md:text-right justify-center md:pr-32';
@@ -269,7 +278,7 @@ function TextLayer({ children, progress, start, end, align }: { children: React.
     return (
         <motion.div
             style={{ opacity, y, pointerEvents }}
-            className={`absolute inset-0 flex flex-col justify-center ${alignClass} z-10 p-6`}
+            className={`absolute inset-0 flex flex-col justify-center ${alignClass} z-10 w-full`} // added w-full
         >
             {children}
         </motion.div>
