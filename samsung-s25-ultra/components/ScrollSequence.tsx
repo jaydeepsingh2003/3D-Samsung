@@ -123,14 +123,12 @@ export default function ScrollSequence() {
                 if (img) drawImageCover(context, img, canvas, spenOpacity.get(), true);
             }
 
-            // 5. Galaxy AI Layer (Images removed as per request)
-            /* 
+            // 5. Galaxy AI Layer
             if (aiOpacity.get() > 0) {
                 const idx = Math.min(FRAME_COUNT, Math.max(1, Math.round(currentAiIndex.get())));
                 const img = aiImages[idx - 1];
-                if (img) drawImageCover(context, img, canvas, aiOpacity.get(), false);
+                if (img) drawImageCover(context, img, canvas, aiOpacity.get(), true);
             }
-            */
         };
 
         const drawImageCover = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, canvas: HTMLCanvasElement, opacity: number, enableRotation: boolean = true) => {
