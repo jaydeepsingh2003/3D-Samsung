@@ -136,7 +136,20 @@ export default function ScrollSequence() {
         const drawImageCover = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, canvas: HTMLCanvasElement, opacity: number) => {
             ctx.save();
             ctx.globalAlpha = opacity;
-            const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+
+            // Desktop: Cover (standard)
+            // Mobile (Portrait): Contain-ish (Fit width mostly, with slight zoom to avoid tiny images)
+            const isMobile = canvas.width < 768;
+            let scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+
+            if (isMobile) {
+                // On mobile, 'cover' zooms too much. 'contain' (width/width) might be too small.
+                // We use width-based scaling but multiply by 1.2 to give a bit of presence without excessive cropping.
+                scale = (canvas.width / img.width) * 1.2;
+                // Ensure we don't accidentally zoom out (scale < contain) if the image is tall
+                scale = Math.max(scale, (canvas.width / img.width));
+            }
+
             const x = (canvas.width / 2) - (img.width / 2) * scale;
             const y = (canvas.height / 2) - (img.height / 2) * scale;
             ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
